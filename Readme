@@ -1,0 +1,70 @@
+
+                    ###############################
+                    #                             #
+                    #   Plus Court Chemin (PCC)   #
+                    #                             #
+                    ###############################
+
+################################################################################
+#                       #
+#        Résumé         #
+#                       #
+#########################
+
+Ce programme permet de cacluler le chemin le plus court entre plusieurs points avec leur distance connue.
+Il utilise trois algorithmes afin de pouvoir comparer leur performances :
+
+   - TSP_Naive
+   - TSP_Elag_Naive
+   - Algorithme des fourmis
+
+
+
+
+################################################################################
+#                       #
+#  Manuel Utilisateur   #
+#                       #
+#########################
+
+
+Pour creer l'executable, ouvrir la console dans le dossier associé et taper :
++----------+
+|$> make   |
++----------+
+
+Pour lancer le programme taper :
++-----------+
+|$> ./PCC   |
++-----------+
+
+
+
+
+
+
+
+
+
+################################################################################
+#                          #
+#  Informations Générales  #
+#                          #
+############################
+
+Ce programme utilise les bibliothèques :
+
+ - stdio.h
+ - stdlib.h
+ - math.h
+ - time.h
+ - MLV/MLV_all.h (Veillez à bien avoir procédé à son téléchargement )
+
+        +-------------------------+
+        | Createur : HAUF Jocelyn |
+        +-------------------------+
+        +-------------------------+
+        | Date :     Mai 2021     |
+        +-------------------------+
+        
+
