@@ -6,7 +6,17 @@
 
 int main(){
 
+    /* Definitions variables */
+
+    
+
+    /*Test sur terminal*/
     printf("Debut\n");
+
+
+    
+
+    /*Debut MLV*/
 
     return EXIT_SUCCESS;
 }

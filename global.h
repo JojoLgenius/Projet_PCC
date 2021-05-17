@@ -12,4 +12,15 @@
 //Define
 
 
+//Structures
+
+typedef struct{
+
+  int t;
+  int * ordre;
+  int cout;
+    
+}solution;
+
+
 #endif
