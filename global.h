@@ -14,13 +14,18 @@
 
 //Structures
 
+//Solution pour TSP
 typedef struct{
-
   int t;
   int * ordre;
-  int cout;
-    
+  int cout;    
 }solution;
+
+//Stock un nombre de ville et une matrice
+typedef struct{
+    int nb_ville;
+    int ** cv;
+}mat_cout;
 
 
 #endif

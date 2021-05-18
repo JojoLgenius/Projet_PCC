@@ -5,7 +5,7 @@
 #include"global.h"
 
 /*Initialise la meilleure solution*/
-void initialiser_meilleure(solution * meilleure, int nb_ville, int ** cv);
+void initialiser_meilleure(solution * meilleure, mat_cout mc);
 /*Initialise la solution partielle*/
 void initialiser_partielle(solution * partielle, int nb_ville);
 
@@ -15,7 +15,7 @@ int appartient(int x, int * liste, int nb_ville);
 
 
 /*TSP_elag_naive*/
-void tsp_elag_naive(solution partielle, solution * meilleure, int nb_ville, int ** cv);
+void tsp_elag_naive(solution partielle, solution * meilleure, mat_cout mc);
 
 
 #endif

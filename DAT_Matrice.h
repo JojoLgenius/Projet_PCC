@@ -8,6 +8,6 @@
 
 /*Permet d'initialiser les valeurs des couts*/
 //(Wikipedia)
-int ** init_ville_test();
+void init_ville_test(mat_cout * mc);
 
 #endif
