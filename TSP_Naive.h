@@ -13,7 +13,8 @@ void initialiser_partielle(solution * partielle, int nb_ville);
 /*Renvoi 1 si x appartient a liste*/
 int appartient(int x, int * liste, int nb_ville);
 
-
+/*TSP_naive*/
+void tsp_naive(solution partielle, solution * meilleure, mat_cout mc);
 /*TSP_elag_naive*/
 void tsp_elag_naive(solution partielle, solution * meilleure, mat_cout mc);
 

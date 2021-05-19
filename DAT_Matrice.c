@@ -1,5 +1,17 @@
 #include "DAT_Matrice.h"
 
+/*Fonction aleatoire
+permet de tirer un nombre aléatoire entre 0 et RAND_MAX*/
+
+int aleatoire(int max){
+  int alea;
+
+  alea=rand()%(max-1)+1;
+
+  return alea;
+}
+
+
 /*
 Fonction initialiser_ville
 Permet d'intialiser le tableau des villes 
@@ -13,7 +25,13 @@ void init_ville_test(mat_cout * mc){
 
     //Nombre de ville
     mc->nb_ville=4;
-    mc->cv=NULL;
+
+
+    if(mc->cv != NULL){
+        mc->cv = NULL;
+    }
+
+   
 
     //Allocation memoire
     mc->cv=(int **)malloc(sizeof(int *) * (mc->nb_ville+1));
@@ -38,4 +56,41 @@ void init_ville_test(mat_cout * mc){
     mc->cv[4][2]=20;
     mc->cv[4][3]=20;
     mc->cv[4][4]=0;
+}
+
+
+
+/*
+Fonction initialiser_ville_
+Permet d'intialiser le tableau des villes*/
+
+void init_ville_alea(mat_cout * mc, int nb_ville, int max){
+
+    int i,j;
+
+    srand(time(NULL));
+
+    mc->nb_ville = nb_ville;
+
+    if(mc->cv != NULL){
+        mc->cv = NULL;
+    }
+
+    
+    //Allocation memoire
+    mc->cv=(int **)malloc(sizeof(int *) * (mc->nb_ville+1));
+    for(i=1; i <= mc->nb_ville; i++){
+        mc->cv[i]=(int *)malloc(sizeof(int) * (mc->nb_ville+1));
+    }
+  
+    for(i=1;i <= nb_ville; i++){
+        for(j=1;j <= nb_ville; j++){
+            if(i == j){
+                mc->cv[i][j]=0;
+            }
+            else{
+                mc->cv[i][j]=aleatoire(max);
+            }
+        }
+    }
 }

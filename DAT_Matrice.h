@@ -6,8 +6,15 @@
 
 //Fonctions
 
-/*Permet d'initialiser les valeurs des couts*/
+/*Renvoi un element aleatoire entre 0 et max*/
+int aleatoire(int max);
+
+//Initialisation cout ville
+    
+/*Initialise des couts constant*/
 //(Wikipedia)
 void init_ville_test(mat_cout * mc);
+/*Initialise les cout aleatoirement*/
+void init_ville_alea(mat_cout * mc, int nb_ville, int max);
 
 #endif

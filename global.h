@@ -10,7 +10,13 @@
 #include<math.h>
 
 //Define
+#define Q 1 //(Fourmi.h :-> maj_phero)
+#define Y 2 //(Fourmi.h :-> fourmi)
+#define PREM_VILLE 1 //(Fourmi.h :-> fourmi)
 
+//Variable globale
+
+int nb_iteration;
 
 //Structures
 

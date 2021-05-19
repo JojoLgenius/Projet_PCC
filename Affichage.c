@@ -32,3 +32,11 @@ void info_solution(solution s, int nb_ville){
     printf("--------------------\n");
 
 }
+
+
+
+
+
+/*-----------------*/
+/*  Affichage MLV  */
+/*-----------------*/
