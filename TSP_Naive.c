@@ -9,6 +9,7 @@
 
 void initialiser_partielle(solution * partielle, int nb_ville){
 
+    int i;
     
     partielle->ordre=NULL;
     
@@ -20,6 +21,9 @@ void initialiser_partielle(solution * partielle, int nb_ville){
   
     partielle->t = 1;
     partielle->ordre[1] = 1;
+    for(i=2; i<= nb_ville; i++){
+        partielle->ordre[i] = 0;
+    }
     partielle->cout = 0;
 
 }
@@ -174,7 +178,6 @@ void tsp_elag_naive(solution partielle, solution *meilleure, mat_cout mc){
   
     /*Si toute les villes ont été visitées, on calcule le cout de la dernière ville jusqu'a la ville initiale*/
     if(partielle.t == meilleure->t){
-
         cout_fin = partielle.cout;
         ordre = partielle.ordre[mc.nb_ville];
         cout_fin += mc.cv[ordre][1];

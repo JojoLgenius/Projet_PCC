@@ -14,11 +14,33 @@
 #define Y 2 //(Fourmi.h :-> fourmi)
 #define PREM_VILLE 1 //(Fourmi.h :-> fourmi)
 
+//Etat du programme
+#define EN_COURS 1
+#define FIN 0
+
+//Choix_ville
+#define WIKIPEDIA 1
+#define ALEA_N_CARRE 2
+#define ALEA_CARRE 3
+
+//Fenetre
+#define MENU 1
+#define FOURMI 2
+#define TSP_ELAG 3
+#define COMP_TSP 4
+#define COMP_TSP_FOURMI 5
+
 //Variable globale
 
 int nb_iteration;
 
+//MLV
+int width;
+int height;
+
 //Structures
+
+
 
 //Solution pour TSP
 typedef struct{

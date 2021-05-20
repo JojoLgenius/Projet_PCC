@@ -19,5 +19,14 @@ void info_solution(solution s, int nb_ville);
 /*  Affichage MLV  */
 /*-----------------*/
 
+/*Affiche une coche*/
+void check(int x, int y,char * titre);
+/*Affiche le menu*/
+void menu();
+/*Bouton suivant ssi les options sont selectionnée*/
+void bouton_suivant_menu(int choix_ville, int choix_algo);
+/*Permet de remplir les coches*/
+void remplir_coche(int choix_ville, int choix_algo);
+
 
 #endif

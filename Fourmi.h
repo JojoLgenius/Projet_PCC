@@ -8,6 +8,8 @@
 /*Permet de generer un nb*/
 // [0.0000 - 0.9999]
 float float_aleatoire();
+/*Renvoie 0 si elem appartient a tab*/
+int non_tab(int * tab, int elem, int taille);
 
 /*Initialisations*/
 
@@ -30,6 +32,9 @@ int choix_ville(float * visite, int nb_ville);
 void maj_phero(solution fourmi, float ** phero ,int nb_ville);
 /*MAJ matrice phero en reduisant les elements*/
 void red_phero(float ** phero, float p,int nb_ville);
+/*Rempli la solution finale*/
+void res_solution(solution * meilleure, mat_cout mc,float ** phero);
+
 
 /*Algorithme des fourmis*/
 void fourmi(solution * meilleure, mat_cout mc, int nb_fourmi, int pondere_a, int pondere_b, float p);

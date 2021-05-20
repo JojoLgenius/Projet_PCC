@@ -13,7 +13,24 @@ float float_aleatoire(){
 
     res = alea/(float)10000;
 
+    printf("Aleatoire = %f \n",res);
+
     return res;
+}
+
+/*
+non_tab()
+Renvoie 0 si l'element appartient au tableau, 1 sinon
+*/
+int non_tab(int * tab, int elem, int taille){
+    int i;
+
+    for(i=1; i<=taille; i++){
+        if(tab[i] == elem){
+            return 0;
+        }
+    }
+    return 1;
 }
 
 
@@ -83,7 +100,7 @@ void calc_chance(mat_cout mc, float * visite, float ** phero, int en_cours, int 
             }
             visite[i] = visite[i]/total;
             //Verif
-            //printf("Calc_chance : visite[%d]=%f\n",i,visite[i]);
+            printf("Calc_chance : visite[%d]=%f\n",i,visite[i]);
         }
     }
     
@@ -108,6 +125,7 @@ int choix_ville(float * visite, int nb_ville){
     for(i=1;i<=nb_ville;i++){
         if(visite[i] >= (float)0){
             falea -= visite[i];
+            //Verif
             printf("\n i=%d -- alea=%f\n",i,falea);
             if(falea < (float)0){
                 return i;
@@ -168,6 +186,48 @@ void red_phero(float ** phero, float p, int nb_ville){
 
 
 /*
+res_solution()
+Parcours une matrice de pheromone pour selectionner les valeur max
+Parametre :
+-----------
+> solution * meilleure
+> float ** phero
+> int nb_ville
+*/
+
+void res_solution(solution * meilleure, mat_cout mc,float ** phero){
+
+    //Iterateurs
+    int i,j;
+    int  x = 1;//MAJ meilleure->ordre
+    float max;//Valeur max de pheromones
+
+    for(i=1;i <= mc.nb_ville; i++){
+        meilleure->ordre[i]=0;
+    }
+    
+    meilleure->cout = 0;
+    meilleure->ordre[x] = PREM_VILLE;
+    //On rempli le tableau meilleure->ordre[i]
+    for(i=2; i <= mc.nb_ville; i++){
+        max = (float)0;//Init phero max a 0
+        //On explore une ligne de phero associee a la ville
+        for(j=1; j <= mc.nb_ville; j++){
+            printf("Phero[%d][%d] = %f\n",x,j,phero[x][j]);
+            if(phero[x][j] > max && non_tab(meilleure->ordre,j,i)==1){
+                max = phero[x][j];//Meilleur phero trouve
+                meilleure->ordre[i] = j;//Meilleure ville trouve
+                
+            }
+        }
+        x = meilleure->ordre[i];//Prochaine ville
+        meilleure->cout += mc.cv[meilleure->ordre[i-1]][x];//MAJ du cout du PCC
+    }
+    meilleure->cout += mc.cv[meilleure->ordre[mc.nb_ville]][1];//Cout du retour
+}
+
+
+/*
 Fourmi
 Calcule le PCC avec l'algorithme des fourmi
  Parametre :
@@ -211,6 +271,7 @@ void fourmi(solution * meilleure, mat_cout mc, int nb_fourmi, int pondere_a, int
     //Iteration pour le nombre de fourmi demande
     for(i=1; i <= nb_fourmi; i++){
 
+        //Verif
         printf("Fourmi n°%d\n",i);
         //Allocations memoire
         visite=(float *)malloc(sizeof(float) * (mc.nb_ville+1));
@@ -228,8 +289,6 @@ void fourmi(solution * meilleure, mat_cout mc, int nb_fourmi, int pondere_a, int
  
         //initialise visite
         init_visite(visite, mc.nb_ville);
-        
-        red_phero(phero, p, mc.nb_ville);//Les pheromones s'evapore (mettre en fin)
                     
         visite[PREM_VILLE] = (float)-1;//La premiere ville est considéré comme visitée
        
@@ -259,12 +318,15 @@ void fourmi(solution * meilleure, mat_cout mc, int nb_fourmi, int pondere_a, int
         //Ajout des pheromones
         maj_phero(fourmi, phero, mc.nb_ville);
 
+                
+        red_phero(phero, p, mc.nb_ville);//Les pheromones s'evapore (mettre en fin)
+
         //Libere la visite
         free(visite);
         free(fourmi.ordre);
     }
 
-
+    res_solution(meilleure,mc,phero);
     //Libere la matrice de phero
     
     free(phero);
