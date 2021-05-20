@@ -94,3 +94,75 @@ void init_ville_alea(mat_cout * mc, int nb_ville, int max){
         }
     }
 }
+
+/*
+  Fonction initialiser_ville_
+  Permet d'intialiser le tableau des villes en forme matrice carre*/
+
+void init_ville_alea_sym(mat_cout * mc, int nb_ville, int max){
+    int i,j;
+
+    srand(time(NULL));
+
+    mc->nb_ville = nb_ville;
+
+    if(mc->cv != NULL){
+        mc->cv = NULL;
+    }
+
+    
+    //Allocation memoire
+    mc->cv=(int **)malloc(sizeof(int *) * (mc->nb_ville+1));
+    for(i=1; i <= mc->nb_ville; i++){
+        mc->cv[i]=(int *)malloc(sizeof(int) * (mc->nb_ville+1));
+    }
+  
+    for(i=1;i <= nb_ville; i++){
+        for(j=1;j <= nb_ville; j++){
+            if(i == j){
+                mc->cv[i][j]=0;
+            }
+            else if(j > i){
+                mc->cv[i][j]=aleatoire(max);
+            }
+            else{
+                mc->cv[i][j]= mc->cv[j][i];  
+            }
+        }
+    }
+}
+
+
+
+
+
+/*Tableau de point pour charger fichier*/
+
+
+/*chargement de fichier
+  Stocke dans un tableau les valeurs d'un fichier
+*/
+void chargement_fichier(tabpoints * t, char *nomfichier){
+    int i;
+    int nb_elem;
+    
+    FILE* fichier = NULL;
+
+    fichier = fopen(nomfichier,"r");
+    if (fichier == NULL) {
+        printf("impossible d'ouvrir le fichier\n");
+    }
+    else{
+        if(fscanf(fichier,"%d",&nb_elem));
+        else{printf("erreur fscanf\n");};
+
+        t->nb_point = nb_elem;
+    
+        for (i=1; i <= nb_elem; i++) { 
+            if(fscanf(fichier,"%lf %lf",&(t->tabp[i].x), &(t->tabp[i].y)));
+            else{printf("erreur fscanf\n");};
+        }
+
+        fclose(fichier);
+    }
+}

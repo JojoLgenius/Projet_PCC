@@ -4,6 +4,48 @@
 /*  Affichage terminal  */
 /*----------------------*/
 
+/*Affiche_matrice()
+Permet d'afficher une matrice passée en parametre
+Soit de type float soit de type int
+Une seule matrice possible
+Remplir par NULL la matrice non utilise
+*/
+void affiche_matrice(int ** matint, float ** matfloat, int max){
+    int i,j;
+    if(matint!=NULL){
+        printf("Affichage matrice int (cout des villes)\n");
+    }
+    else{
+        printf("Affichage matrice float (pheromones)\n");
+    }
+    printf("\n     |");
+    for(i=1;i<max+1;i++){
+        printf("%4d ",i);
+    }
+    printf("\n-----+");
+    for(i=1;i<max+1;i++){
+        printf("-----");
+    }
+    printf("+\n");
+    for(i=1;i<max+1;i++){
+        printf("%4d |",i);
+        for(j=1;j<max+1;j++){
+            if(matint!=NULL){
+                printf("%4d ",matint[i][j]);
+            }
+            else{
+                printf("%.2f ",matfloat[i][j]); 
+            }
+        }
+        printf("|\n");
+    }
+    printf("-----+");
+    for(i=1;i<max+1;i++){
+        printf("-----");
+    }
+    printf("+\n"); 
+}
+
 /*Fonction affiche_liste
   Permet d'afficher une liste d'entier donné en paramètre
 */
@@ -107,12 +149,17 @@ void menu(){
     check(
         (int)width * (51./100.),
         (int)height * (25/100.),
-        "Mode aleatoire non carré"
+        "Mode aleatoire carré"
         );
     check(
         (int)width * (51./100.),
         (int)height * (31./100.),
-        "Mode aleatoire carré"
+        "Mode aleatoire carré symetrique"
+        );
+    check(
+        (int)width * (51./100.),
+        (int)height * (37./100.),
+        "Mode Test (.txt)"
         );
     
 
@@ -182,7 +229,7 @@ void bouton_suivant_menu(int choix_ville, int choix_algo){
             (int)width * (15./100.),
             (int)height * (9./100),
             "Suivant",police,1,
-            MLV_COLOR_BLACK,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+            MLV_COLOR_GREY,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
             MLV_TEXT_CENTER,
             MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
             );
@@ -217,6 +264,15 @@ void remplir_coche(int choix_ville, int choix_algo){
         MLV_draw_filled_rectangle(
             (int)width * (51.2/100.),
             (int)height * (31.4/100.),
+            (int)width * (2./100.),
+            (int)height * (3.6/100),
+            MLV_COLOR_WHITE
+            );
+        break;
+    case TEST:
+        MLV_draw_filled_rectangle(
+            (int)width * (51.2/100.),
+            (int)height * (37.4/100.),
             (int)width * (2./100.),
             (int)height * (3.6/100),
             MLV_COLOR_WHITE
@@ -272,5 +328,268 @@ void remplir_coche(int choix_ville, int choix_algo){
     
 }
 
+/*Affiche la valeur n*/
 
+
+void affiche_n(int n){
+    /*Charge la police Ubuntu-B*/
+    //taille = 4% de la hauteur
+    MLV_Font * police = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (4./100.)));
+        
+    int taille = snprintf(NULL,0,"%d",n);
+    char * strn = malloc(taille+1);
+
+    snprintf(strn, taille+1, "%d", n);
+
+    //texte
+    MLV_draw_text_box_with_font(
+        (int)width * (30./100.),
+        (int)height * (9./100.),
+        (int)width * (5./100.),
+        (int)height * (9./100),
+        strn,police,1,
+        MLV_COLOR_BLACK,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,
+        MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
+        );
+
+    /*On libere strn*/
+    free(strn);
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+    
+
+}
+
+/*affiche_inc_dec()
+Affiche un bouton plus et un bouton moins
+Agit sur le nombre de ville dans cas aleatoire
+*/
+
+void affiche_inc_dec(){
+    /*Bouton Supprime*/
+    MLV_draw_text_box(
+        (int)(width * (27.5/100.)),
+        (int)(height * (11./100.)),
+        (int)(width * (2.5/100.)),
+        (int)(height * (4.5/100.)),
+        "-", 1,
+        MLV_COLOR_BLACK, MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,MLV_TEXT_CENTER,MLV_TEXT_CENTER);
+    /*Bouton Ajoute*/
+    MLV_draw_text_box(
+        (int)(width * (35./100.)),
+        (int)(height * (11./100.)),
+        (int)(width * (2.5/100.)),
+        (int)(height * (4.5/100.)),
+        "+", 1,
+        MLV_COLOR_BLACK, MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,MLV_TEXT_CENTER,MLV_TEXT_CENTER);
+
+
+}
+
+/*Affiche un bouton pour charger un fichier de point ainsi qu'un bouton pour vider */
+void affiche_charger(){
+
+    //taille = 4% de la hauteur
+    MLV_Font * police = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (4./100.)));
+
+        //texte
+    MLV_draw_text_box_with_font(
+        (int)width * (27./100.),
+        (int)height * (21./100.),
+        (int)width * (10./100.),
+        (int)height * (5./100),
+        "Charger",police,1,
+        MLV_COLOR_BLACK,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,
+        MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
+        );
+    
+
+    
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+}
+
+/*affiche_chemin
+Affiche le dernier chemin entre par l'utilisateur
+*/
+void affiche_chemin(char * chemin){
+
+    /*Charge la police Ubuntu-B*/
+    //taille = 2.5% de la hauteur
+    MLV_Font* police = MLV_load_font("Police/Ubuntu-B.ttf",(int)(height * (3./100.)));
+
+    //texte
+    MLV_draw_text_with_font(
+        (int)(width * (5./100.)), (int)(height * (29./100.)),
+        chemin,
+        police,MLV_COLOR_WHITE);
+    
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+ 
+}
+
+
+//Affichage cout ville
+
+/*Affichage pour mode wikipedia*/
+void affiche_pt_wikipedia(){
+
+    //Points
+    MLV_draw_filled_circle(
+        (int)width * (10./100.),
+        (int)height * (45./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (9.7/100.)),
+        (int)(height * (44./100.)),
+        "1",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (30./100.),
+        (int)height * (45./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (29.7/100.)),
+        (int)(height * (44./100.)),
+        "2",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (10./100.),
+        (int)height * (82./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (9.7/100.)),
+        (int)(height * (81./100.)),
+        "3",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (30./100.),
+        (int)height * (82./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (29.7/100.)),
+        (int)(height * (81./100.)),
+        "4",
+        MLV_COLOR_WHITE
+        );
+    
+    //Liaisons possible
+
+    //[1,2]
+    MLV_draw_line(
+        (int)width * (11.1/100.),
+        (int)height * (45./100.),
+        (int)width * (28.9/100.),
+        (int)height * (45./100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (20./100.)),
+        (int)(height * (42./100.)),
+        "4",
+        MLV_COLOR_YELLOW
+        );
+
+        //[1,3]
+    MLV_draw_line(
+        (int)width * (10./100.),
+        (int)height * (47.1/100.),
+        (int)width * (10./100.),
+        (int)height * (79.9/100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (9./100.)),
+        (int)(height * (63./100.)),
+        "3",
+        MLV_COLOR_YELLOW
+        );
+
+    //[1,4]
+    MLV_draw_line(
+        (int)width * (10.9/100.),
+        (int)height * (47.1/100.),
+        (int)width * (28.9/100.),
+        (int)height * (79.9/100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (26./100.)),
+        (int)(height * (70./100.)),
+        "1",
+        MLV_COLOR_YELLOW
+        );
+    
+    //[2,3]
+    MLV_draw_line(
+        (int)width * (29.1/100.),
+        (int)height * (47.1/100.),
+        (int)width * (11./100.),
+        (int)height * (80./100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (14./100.)),
+        (int)(height * (70./100.)),
+        "1",
+        MLV_COLOR_YELLOW
+        );
+    
+    //[2,4]
+    MLV_draw_line(
+        (int)width * (30./100.),
+        (int)height * (47.1/100.),
+        (int)width * (30./100.),
+        (int)height * (79.9/100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (31./100.)),
+        (int)(height * (63./100.)),
+        "2",
+        MLV_COLOR_YELLOW
+        );
+    
+    //[3,4]
+    MLV_draw_line(
+        (int)width * (11.1/100.),
+        (int)height * (82/100.),
+        (int)width * (28.9/100.),
+        (int)height * (82/100.),
+        MLV_COLOR_CYAN
+        );
+    MLV_draw_text(
+        (int)(width * (20./100.)),
+        (int)(height * (83./100.)),
+        "5",
+        MLV_COLOR_YELLOW
+        );
+    
+
+   
+    
+}
 

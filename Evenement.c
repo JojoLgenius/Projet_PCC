@@ -44,6 +44,53 @@ int Click_choix_algo(int x, int y){
         ){return 1;}
     return 0;
 }
+
+/*Click_inc
+Si le click est sur le bouton inc
+Renvoi 1, sinon 0
+*/
+int Click_inc(int x, int y){
+
+    if(
+        x > (int)width * (35./100.) &&
+        y > (int)height * (11./100.) &&
+        x < (int)width * (35./100.) +  (int)width * (2.5/100.) &&
+        y < (int)height * (11./100.) + (int)height * (4.5/100.) 
+        ){return 1;}
+    return 0;
+}
+
+/*Click_dec
+Si le click est sur le bouton dec
+Renvoi 1, sinon 0
+*/
+int Click_dec(int x, int y){
+
+    if(
+        x > (int)width * (27.5/100.) &&
+        y > (int)height * (11./100.) &&
+        x < (int)width * (27.5/100.) +  (int)width * (2.5/100.) &&
+        y < (int)height * (11./100.) + (int)height * (4.5/100.) 
+        ){return 1;}
+    return 0;
+}
+
+/*Click_charger
+Si le click est sur le bouton charger
+renvoi 1, sinon 0
+*/
+int Click_charger(int x, int y){
+
+    if(
+        x > (int)width * (27./100.) &&
+        y > (int)height * (21./100.) &&
+        x < (int)width * (27./100.) +  (int)width * (10./100.) &&
+        y < (int)height * (21./100.) + (int)height * (5./100.) 
+        ){return 1;}
+    return 0;
+}
+
+
 /*MAJ_choix_ville
 Renvoie la nouvelle valeur de choix
 */
@@ -60,13 +107,19 @@ int MAJ_choix_ville(int choix_ville,int x,int y){
         y > (int)height * (25./100.) &&
         x < (int)width * (51./100.) + (int)width * (2.5/100.) &&
         y < (int)height * (25./100.) + (int)height * (4.5/100)
-        ){return ALEA_N_CARRE;}
+        ){return ALEA_CARRE;}
     if(
         x > (int)width * (51./100.) &&
         y > (int)height * (31./100.) &&
         x < (int)width * (51./100.) + (int)width * (2.5/100.) &&
         y < (int)height * (31./100.) + (int)height * (4.5/100)
-        ){return ALEA_CARRE;}
+        ){return ALEA_CARRE_SYM;}
+    if(
+        x > (int)width * (51./100.) &&
+        y > (int)height * (37./100.) &&
+        x < (int)width * (51./100.) + (int)width * (2.5/100.) &&
+        y < (int)height * (37./100.) + (int)height * (4.5/100)
+        ){return TEST;}
     return choix_ville;
 }
 

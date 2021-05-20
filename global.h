@@ -20,8 +20,9 @@
 
 //Choix_ville
 #define WIKIPEDIA 1
-#define ALEA_N_CARRE 2
-#define ALEA_CARRE 3
+#define ALEA_CARRE 2
+#define ALEA_CARRE_SYM 3
+#define TEST 4
 
 //Fenetre
 #define MENU 1
@@ -55,5 +56,15 @@ typedef struct{
     int ** cv;
 }mat_cout;
 
+//Structure point
+struct point {
+  double x,y;
+};
+
+//Tableau de point
+typedef struct{
+    int nb_point;
+    struct point * tabp;
+}tabpoints;
 
 #endif

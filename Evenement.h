@@ -10,7 +10,12 @@ int Click_suivant(int x, int y);
 int Click_choix_ville(int x, int y);
 /*Renvoi 1 si le click est dans choix_algo*/
 int Click_choix_algo(int x, int y);
-
+/*Renvoi 1 si le click est sur inc*/
+int Click_inc(int x, int y);
+/*Renvoi 1 si le click est sur dec*/
+int Click_dec(int x, int y);
+/*Renvoi 1 si le click est sur charger*/
+int Click_charger(int x, int y);
 
 /*Gere les mise a jour en fonction des clicks*/
 int MAJ_choix_ville(int choix_ville,int x,int y);
