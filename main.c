@@ -31,15 +31,22 @@ int main(){
     tabpoints t;
     //Chemin du fichier (input)
     char *texte, *chemin;   
-    //Iterateur
-    int i,j;
     //Matrice des couts
     mat_cout mcv;
     //Cout maximum
     int cmax = 10;
 
+    //FOURMIS
+    int nb_fourmi = 10;
+    int pondere_a = 1;
+    int pondere_b = 4;
+    float p = 0.5;
+
     
     /*
+    //Iterateur
+    int i,j;
+
     int ** cv = NULL;
     //Nombre de ville
     int nb_ville=4;
@@ -72,20 +79,22 @@ int main(){
     /*Initialisation*/
     //init_ville_wikipedia(&mcv);
     //init_ville_alea(&mcv, 4, 10);
-    init_ville_alea_sym(&mcv, 12, 10);
+    //init_ville_alea_sym(&mcv, 12, 10);
     
-    for(i=1;i<= mcv.nb_ville; i++){
+
+    /*for(i=1;i<= mcv.nb_ville; i++){
         for(j=1; j<= mcv.nb_ville; j++){
             printf("%3d | ",mcv.cv[i][j]);  
         }
         printf("\n");
     }
+    */
 
     /*Test sur terminal*/
     
     printf("\nDebut\n");
 
-    
+    /*
     initialiser_meilleure(meilleure,mcv);
     fourmi(meilleure,mcv, 500, 1, 4, 0.5);
 
@@ -93,7 +102,10 @@ int main(){
     info_solution(*meilleure, mcv.nb_ville);
 
     free(meilleure);
+    */
 
+
+    /*
     meilleure = NULL;
     meilleure = (solution *)malloc(sizeof(solution)*1);
     if(meilleure == NULL){
@@ -117,9 +129,7 @@ int main(){
 
     free(meilleure);
     free(partielle);
-    
-
-    printf("\nWait\n");
+    */
 
     /*
     meilleure = NULL;
@@ -147,10 +157,13 @@ int main(){
     free(partielle);
 
     */
+
+
+    /*
     free(mcv.cv);
     mcv.cv = NULL;
     mcv.nb_ville = 0;
-
+    */
 
 
 
@@ -168,6 +181,8 @@ int main(){
 
     //Valeur de la fenetre
     width = MLV_get_desktop_width()-100;
+//Verif
+//width = 600;
     height = width * 55/100;
 
     //Creation fenetre
@@ -191,7 +206,9 @@ int main(){
     init_ville_wikipedia(&mcv);
 
     do{
-
+    
+        /*-----FENETRE MENU------*/
+        //(1ere fenetre)
         while(fenetre == MENU){
 
             
@@ -333,6 +350,157 @@ int main(){
            
         }
 
+
+
+        /*-----FENETRE FOURMI------*/
+        if(fenetre == FOURMI){
+            MLV_change_window_caption("PCC Fourmi","PCC");
+        }
+        MLV_clear_window(MLV_COLOR_BLACK);
+        while(fenetre == FOURMI){
+
+            //Elements de la fenetre
+            affiche_fen_fourmi(nb_fourmi,pondere_a,pondere_b,p);
+            
+            if(choix_ville == WIKIPEDIA){
+                affiche_pt_wikipedia_vide();
+            }
+
+            //Recupere les clicks souris
+            event = MLV_get_event(
+                NULL,NULL,NULL,
+                NULL,NULL,
+                &mouse_x,&mouse_y, &mouse_button,
+                &button_state         
+                );
+            //Si le click souris est click gauche et appuye
+            if(event == MLV_MOUSE_BUTTON &&
+               mouse_button == MLV_BUTTON_LEFT &&
+               button_state == MLV_PRESSED){
+                //Si click sur bouton retour -> menu
+                if(Click_retour_menu(mouse_x,mouse_y)){
+                    fenetre = MENU;
+                }
+                //Reglage nombre de fourmi
+                if(Click_inc_nb_fourmis(mouse_x,mouse_y)){
+                    nb_fourmi++;
+                }
+                if(Click_dec_nb_fourmis(mouse_x,mouse_y) &&
+                   nb_fourmi>0){             
+                    nb_fourmi--;
+                }
+                //Reglage pondere_a
+                if(Click_inc_pondere_a(mouse_x,mouse_y)){
+                    pondere_a++;
+                }
+                if(Click_dec_pondere_a(mouse_x,mouse_y) &&
+                   pondere_a>0){             
+                    pondere_a--;
+                }
+                //Reglage pondere_b
+                if(Click_inc_pondere_b(mouse_x,mouse_y)){
+                    pondere_b++;
+                }
+                if(Click_dec_pondere_b(mouse_x,mouse_y) &&
+                   pondere_b>0){             
+                    pondere_b--;
+                }
+                //Reglage p
+                if(Click_inc_p(mouse_x,mouse_y) &&
+                    p < 1.){
+                    p=p+0.1;
+                }
+                if(Click_dec_p(mouse_x,mouse_y) &&
+                   p > 0.){             
+                    p=p-0.1;
+                }
+
+                //Si Click sur execution
+                if(Click_executer(mouse_x,mouse_y)){
+                    printf("Lancer\n");
+                    //Reallocation
+                    meilleure = NULL;
+                    meilleure = (solution *)malloc(sizeof(solution)*1);
+                    if(meilleure == NULL){
+                        printf("Erreur alloc meilleure (main.c)\n");
+                        exit(0);
+                    }
+                    initialiser_meilleure(meilleure,mcv);
+                    fourmi(meilleure,
+                           mcv,
+                           nb_fourmi,
+                           pondere_a,
+                           pondere_b,
+                           p);
+
+                    printf("\n\nRésultat :\n");
+                    info_solution(*meilleure, mcv.nb_ville);
+
+                    free(meilleure);
+
+                }
+            }
+        }
+
+
+        MLV_clear_window(MLV_COLOR_BLACK);
+
+        if(fenetre == TSP_ELAG){
+            MLV_change_window_caption("PCC TSP_ELAG","PCC");
+        }
+        if(mcv.nb_ville > 18){
+            printf("Nombre de ville trop eleve\n");
+            fenetre = MENU;
+        }
+        MLV_clear_window(MLV_COLOR_BLACK);
+        while(fenetre == TSP_ELAG){
+            
+            affiche_fen_elag();
+            
+            if(choix_ville == WIKIPEDIA){
+                affiche_pt_wikipedia_vide();
+            }
+
+            //Recupere les clicks souris
+            event = MLV_get_event(
+                NULL,NULL,NULL,
+                NULL,NULL,
+                &mouse_x,&mouse_y, &mouse_button,
+                &button_state         
+                );
+            //Si le click souris est click gauche et appuye
+            if(event == MLV_MOUSE_BUTTON &&
+               mouse_button == MLV_BUTTON_LEFT &&
+               button_state == MLV_PRESSED){
+                //Si Click sur execution
+                if(Click_executer(mouse_x,mouse_y)){
+                    //Reallocation
+                    meilleure = NULL;
+                    meilleure = (solution *)malloc(sizeof(solution)*1);
+                    if(meilleure == NULL){
+                        printf("Erreur alloc meilleure (main.c)\n");
+                        exit(0);
+                    }
+                    partielle = NULL;
+                    partielle = (solution *)malloc(sizeof(solution)*1);
+                    if(partielle == NULL){
+                        printf("Erreur alloc meilleure (main.c)\n");
+                        exit(0);
+                    }
+                    printf("Lancer\n");
+                    initialiser_partielle(partielle,mcv.nb_ville);
+                    initialiser_meilleure(meilleure,mcv);
+                    tsp_elag_naive(*partielle,meilleure,mcv);
+
+                    printf("\n\nRésultat :\n");
+                    info_solution(*meilleure, mcv.nb_ville);
+
+                    free(partielle);
+                    free(meilleure);
+            
+                }
+            }
+        }
         MLV_clear_window(MLV_COLOR_BLACK);
         MLV_actualise_window();
 

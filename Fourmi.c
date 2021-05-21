@@ -85,6 +85,15 @@ void calc_chance(mat_cout mc, float * visite, float ** phero, int en_cours, int 
     //Boucle pour calculer le total (denominateur)
     for(i=1; i <= mc.nb_ville; i++){
         if(visite[i]>=0){
+            printf(
+                "Calc_chance[%d]: visite[%d]=%f -> %f (phero : %f -- cv : %f)\n",
+                en_cours,
+                i,
+                visite[i],
+                ((float)Y + powf(phero[en_cours][i], (float)pondere_a)) * powf((float)1 / (float)(mc.cv[en_cours][i]), (float)pondere_b),
+                (float)phero[en_cours][i],
+                (float)(mc.cv[en_cours][i])
+                       );
             visite[i]=((float)Y + powf(phero[en_cours][i], (float)pondere_a)) * powf((float)1 / (float)(mc.cv[en_cours][i]), (float)pondere_b);
             total += visite[i];           
         }
@@ -251,13 +260,13 @@ void fourmi(solution * meilleure, mat_cout mc, int nb_fourmi, int pondere_a, int
     solution fourmi; //Ordre et cout final de chaque iterations
 
     //Allocation
-    phero = (float **)malloc(sizeof(float *) * (mc.nb_ville+1));
+    phero = (float **)malloc(sizeof(float *) * (mc.nb_ville+2));
     if(phero == NULL){
         printf("Erreur malloc phero (Fourmi.h/fourmi)\n");
         exit(0);
     }
     for(i=1; i <= mc.nb_ville; i++){
-        phero[i]=(float *)malloc(sizeof(float ) * (mc.nb_ville+1));
+        phero[i]=(float *)malloc(sizeof(float ) * (mc.nb_ville+2));
         if(phero[i] == NULL){
             printf("Erreur malloc phero[%d](Fourmi.h/fourmi)\n",i);
             exit(0);

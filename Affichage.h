@@ -40,10 +40,25 @@ void affiche_chemin(char * chemin);
 
 //Affichage cout ville
 
-/*Affichage pour mode wikipedia*/
+/*Affichage pour mode wikipedia
+(liaison)*/
 void affiche_pt_wikipedia();
+/*Affichage pour mode wikipedia
+(Sans liaisons)*/
+void affiche_pt_wikipedia_vide();
 /*Affichage pour mode TEST*/
 void affiche_pt_test(tabpoints t);
+
+
+void affiche_retour_menu();
+/*--FOURMI--*/
+//Affiche un bouton de selection (reglages)
+void affiche_selecteur(int x, int y, int lon, int hau, char * texte, int nint);
+
+void affiche_fen_fourmi(int nb_fourmi, int pondere_a, int pondere_b, float p);
+
+/*--ELAG NAIVE --*/
+void affiche_fen_elag();
 
 
 #endif

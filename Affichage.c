@@ -83,6 +83,15 @@ void info_solution(solution s, int nb_ville){
 /*  Affichage MLV  */
 /*-----------------*/
 
+
+/*
+  +-----------+
+  |           |
+  | Page MENU |
+  |           |
+  +-----------+
+*/
+
 void check(int x, int y,char * titre){
     //taille = 2.5% de la hauteur
     MLV_Font * police2 = MLV_load_font(
@@ -438,6 +447,289 @@ void affiche_chemin(char * chemin){
 }
 
 
+
+/*affichage_pt_test
+Affiche chaque point de tabpoints dans le graphe
+*/
+
+void affiche_pt_test(tabpoints t){
+
+    int nb_elem = t.nb_point;
+    int i,x,y;
+
+    int mil_graphe_x = (int)width * (5./100.);
+    int mil_graphe_y = (int)height * (36./100.) + (int)height * (54./100.);
+    int taille_graphe = (int)width * (30./100.);
+    //Verif
+    //MLV_draw_filled_circle(mil_graphe_x,mil_graphe_y-2,1,MLV_COLOR_RED);
+
+    //printf("Affichage\n");
+    for(i=1; i <= nb_elem; i++) {
+        x=(int)(mil_graphe_x + (t.tabp[i].x * taille_graphe));
+        y=(int)(mil_graphe_y - (t.tabp[i].y * taille_graphe));
+       MLV_draw_filled_circle(x,y,1,MLV_COLOR_RED);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void affiche_retour_menu(){
+
+    int tabx[3];
+
+    tabx[0]= (int)width * (1.5/100.);
+    tabx[1]= (int)width * (4./100.);
+    tabx[2]= (int)width * (4./100.); 
+
+    int taby[3];
+
+    taby[0] = (int)height * (4.5/100.);
+    taby[1] = (int)height * (2./100.);
+    taby[2] = (int)height * (7./100.);
+                
+    
+    MLV_draw_filled_polygon(
+        tabx,
+        taby,
+        3,MLV_COLOR_WHITE
+        );
+}
+
+
+
+/*
+  +-------------+
+  |             |
+  | Page FOURMI |
+  |             |
+  +-------------+
+*/
+
+void affiche_selecteur(int x, int y, int lon, int hau, char * texte, int nint){
+
+    //taille = 4% de la hauteur
+    MLV_Font * police = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (4./100.)));
+
+    
+    //taille = 3.5 de la hauteur
+    MLV_Font * police2 = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (3.5/100.)));
+
+    //Converti entier
+    int taille = 0;
+    char * strn = NULL;
+
+    taille = snprintf(NULL,0,"%d",nint);
+    strn = malloc(taille+1);
+    snprintf(strn, taille+1, "%d", nint);
+  
+    
+    //Selecteurs
+    //Valeur du parametre
+    MLV_draw_text_box_with_font(
+        x,
+        y,
+        lon,
+        hau,
+        strn,police,1,
+        MLV_COLOR_BLACK,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,
+        MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
+        );
+    /*Bouton Supprime*/
+    MLV_draw_text_box(
+        (int) (x - (lon * (55./100.))),
+        (int) (y + (hau * (25./100.))),
+        (int) lon / 2,
+        (int) hau /2,
+        "-", 1,
+        MLV_COLOR_BLACK, MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,MLV_TEXT_CENTER,MLV_TEXT_CENTER
+        );
+    /*Bouton Ajoute*/
+    MLV_draw_text_box(
+        (int) (x + (lon * (105./100.))),
+        (int) (y + (hau * (25./100.))),
+        (int) lon / 2,
+        (int) hau /2,
+        "+", 1,
+        MLV_COLOR_BLACK, MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,MLV_TEXT_CENTER,MLV_TEXT_CENTER
+        );
+    //texte
+    MLV_draw_text_with_font(
+        x + (lon * (180./100.)),
+        y + (hau * (25./100.)),
+        texte,police2,MLV_COLOR_WHITE
+        );
+
+    
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+        MLV_free_font(police2);
+}
+
+
+
+        
+
+void affiche_fen_fourmi(int nb_fourmi, int pondere_a, int pondere_b, float p){
+
+    //taille = 4% de la hauteur
+    MLV_Font * police = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (4./100.)));
+
+
+
+    //Contient villes
+    MLV_draw_rectangle(
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        (int)width * (50./100.),
+        (int)height * (81./100),
+        MLV_COLOR_WHITE
+        );
+
+
+    //Selecteurs
+    affiche_selecteur(
+        (int)width * (60./100.),
+        (int)height * (9./100.),
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        "Nombre de fourmi",
+        nb_fourmi);
+    affiche_selecteur(
+        (int)width * (60./100.),
+        (int)height * (22./100.),
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        "Importance pheromones",
+        pondere_a);
+    affiche_selecteur(
+        (int)width * (60./100.),
+        (int)height * (35./100.),
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        "Importance cout",
+        pondere_b);
+    affiche_selecteur(
+        (int)width * (60./100.),
+        (int)height * (48./100.),
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        "Taux d'evaporation (/10)",
+        p*10);
+
+    affiche_retour_menu();
+
+    //Bouton d'execution
+    MLV_draw_text_box_with_font(
+        (int)width * (75./100.),
+        (int)height * (81./100.),
+        (int)width * (15./100.),
+        (int)height * (9./100.),
+        "Lancer",police,1,
+        MLV_COLOR_YELLOW,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,
+        MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
+        );
+
+    MLV_actualise_window();    
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+
+}
+
+
+
+
+/*
+  +-----------+
+  |           |
+  | Page ELAG |
+  |           |
+  +-----------+
+*/
+
+
+void affiche_fen_elag(){
+
+    //taille = 4% de la hauteur
+    MLV_Font * police = MLV_load_font(
+        "Police/Ubuntu-B.ttf",
+        (int)(height * (4./100.)));
+
+
+
+    //Contient villes
+    MLV_draw_rectangle(
+        (int)width * (5./100.),
+        (int)height * (9./100.),
+        (int)width * (50./100.),
+        (int)height * (81./100),
+        MLV_COLOR_WHITE
+        );
+
+    affiche_retour_menu();
+
+    //Bouton d'execution
+    MLV_draw_text_box_with_font(
+        (int)width * (75./100.),
+        (int)height * (81./100.),
+        (int)width * (15./100.),
+        (int)height * (9./100.),
+        "Lancer",police,1,
+        MLV_COLOR_YELLOW,MLV_COLOR_BLACK,MLV_COLOR_WHITE,
+        MLV_TEXT_CENTER,
+        MLV_HORIZONTAL_CENTER,MLV_VERTICAL_CENTER
+        );
+
+    MLV_actualise_window();    
+    /*On libere la police utilise*/
+    MLV_free_font(police);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
 //Affichage cout ville
 
 /*Affichage pour mode wikipedia*/
@@ -590,27 +882,63 @@ void affiche_pt_wikipedia(){
     
 }
 
-/*affichage_pt_test
-Affiche chaque point de tabpoints dans le graphe
-*/
 
-void affiche_pt_test(tabpoints t){
+        
 
-    int nb_elem = t.nb_point;
-    int i,x,y;
+/*Affichage pour mode wikipedia*/
+void affiche_pt_wikipedia_vide(){
 
-    int mil_graphe_x = (int)width * (5./100.);
-    int mil_graphe_y = (int)height * (36./100.) + (int)height * (54./100.);
-    int taille_graphe = (int)width * (30./100.);
-    //Verif
-    //MLV_draw_filled_circle(mil_graphe_x,mil_graphe_y-2,1,MLV_COLOR_RED);
-
-    //printf("Affichage\n");
-    for(i=1; i <= nb_elem; i++) {
-        x=(int)(mil_graphe_x + (t.tabp[i].x * taille_graphe));
-        y=(int)(mil_graphe_y - (t.tabp[i].y * taille_graphe));
-       MLV_draw_filled_circle(x,y,1,MLV_COLOR_RED);
-    }
-
+    //Points
+    MLV_draw_filled_circle(
+        (int)width * (10./100.),
+        (int)height * (18./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (9.7/100.)),
+        (int)(height * (17./100.)),
+        "1",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (50./100.),
+        (int)height * (18./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (49.7/100.)),
+        (int)(height * (17./100.)),
+        "2",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (10./100.),
+        (int)height * (82./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (9.7/100.)),
+        (int)(height * (81./100.)),
+        "3",
+        MLV_COLOR_WHITE
+        );
+    
+    MLV_draw_filled_circle(
+        (int)width * (50./100.),
+        (int)height * (82./100.),
+        (int)width * (1./100.),
+        MLV_COLOR_RED
+        );
+    MLV_draw_text(
+        (int)(width * (49.7/100.)),
+        (int)(height * (81./100.)),
+        "4",
+        MLV_COLOR_WHITE
+        );
+    
 }
-

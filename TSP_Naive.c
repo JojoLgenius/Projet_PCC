@@ -38,7 +38,7 @@ void initialiser_meilleure(solution * meilleure,  mat_cout mc){
 
     
     meilleure->ordre=NULL;
-    meilleure->ordre=(int *)malloc(sizeof(int) * (mc.nb_ville+1));
+    meilleure->ordre=(int *)malloc(sizeof(int) * (mc.nb_ville+2));
     if(meilleure->ordre == NULL){
         printf("Erreur allocation meilleure.ordre dans TSP_naive.c\n");
         exit(0);

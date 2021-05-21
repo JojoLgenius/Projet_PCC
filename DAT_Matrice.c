@@ -138,7 +138,6 @@ Utilise les distances euclidiennes
 void init_ville_test(mat_cout * mc, tabpoints t){
       //Iterateurs
     int i,j;
-    printf("t = %d", t.nb_point);
     //Nombre de ville
     mc->nb_ville = t.nb_point;
 
