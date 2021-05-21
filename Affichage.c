@@ -586,10 +586,31 @@ void affiche_pt_wikipedia(){
         (int)(height * (83./100.)),
         "5",
         MLV_COLOR_YELLOW
-        );
+        );  
     
+}
 
-   
-    
+/*affichage_pt_test
+Affiche chaque point de tabpoints dans le graphe
+*/
+
+void affiche_pt_test(tabpoints t){
+
+    int nb_elem = t.nb_point;
+    int i,x,y;
+
+    int mil_graphe_x = (int)width * (5./100.);
+    int mil_graphe_y = (int)height * (36./100.) + (int)height * (54./100.);
+    int taille_graphe = (int)width * (30./100.);
+    //Verif
+    //MLV_draw_filled_circle(mil_graphe_x,mil_graphe_y-2,1,MLV_COLOR_RED);
+
+    //printf("Affichage\n");
+    for(i=1; i <= nb_elem; i++) {
+        x=(int)(mil_graphe_x + (t.tabp[i].x * taille_graphe));
+        y=(int)(mil_graphe_y - (t.tabp[i].y * taille_graphe));
+       MLV_draw_filled_circle(x,y,1,MLV_COLOR_RED);
+    }
+
 }
 

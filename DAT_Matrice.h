@@ -13,12 +13,14 @@ int aleatoire(int max);
     
 /*Initialise des couts constant*/
 //(Wikipedia)
-void init_ville_test(mat_cout * mc);
+void init_ville_wikipedia(mat_cout * mc);
 /*Initialise les cout aleatoirement*/
 void init_ville_alea(mat_cout * mc, int nb_ville, int max);
 /*Initalise une matrice symettrique*/
 void init_ville_alea_sym(mat_cout * mc, int nb_ville, int max);
-
+/*Initialise des couts constant*/
+//Fichier texte
+void init_ville_test(mat_cout * mc, tabpoints t);
 
 /*Tableau de points*/
 void chargement_fichier(tabpoints * t, char *nomfichier);

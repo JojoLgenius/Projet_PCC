@@ -42,6 +42,8 @@ void affiche_chemin(char * chemin);
 
 /*Affichage pour mode wikipedia*/
 void affiche_pt_wikipedia();
+/*Affichage pour mode TEST*/
+void affiche_pt_test(tabpoints t);
 
 
 #endif

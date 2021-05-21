@@ -70,7 +70,7 @@ int main(){
     }
 
     /*Initialisation*/
-    //init_ville_test(&mcv);
+    //init_ville_wikipedia(&mcv);
     //init_ville_alea(&mcv, 4, 10);
     init_ville_alea_sym(&mcv, 12, 10);
     
@@ -183,11 +183,12 @@ int main(){
         MLV_COLOR_WHITE, MLV_COLOR_BLACK,
         MLV_COLOR_WHITE, "->"
         );
+    
     chemin = (char*) malloc( 1*sizeof(char) );
     *chemin = '\0';
 
     //Initialise mcv
-    init_ville_test(&mcv);
+    init_ville_wikipedia(&mcv);
 
     do{
 
@@ -218,6 +219,10 @@ int main(){
                 /*On affiche le chemin actuel*/
                 affiche_chemin(chemin);
             }
+            //Si test est en selection
+            if(choix_ville == TEST){
+                affiche_pt_test(t);                
+            }
             
             
             //Recupere les clicks souris
@@ -238,6 +243,12 @@ int main(){
             
             //Si le click souris est click gauche et appuye
             if(event == MLV_MOUSE_BUTTON && mouse_button == MLV_BUTTON_LEFT && button_state == MLV_PRESSED){
+                if(choix_ville == TEST && Click_charger(mouse_x,mouse_y)){
+                    chargement_fichier(&t,chemin);
+                    init_ville_test(&mcv,t);
+                    affiche_matrice(mcv.cv,NULL,mcv.nb_ville);
+                }
+                
                 //Si click est sur suivant
                 if(Click_suivant(mouse_x,mouse_y)){
                     fenetre = choix_algo;
@@ -252,7 +263,7 @@ int main(){
                     mcv.cv = NULL;
                     switch(choix_ville){
                     case WIKIPEDIA :
-                        init_ville_test(&mcv);
+                        init_ville_wikipedia(&mcv);
                         break;
                     case ALEA_CARRE :
                         //mcv.nb_ville = 45;
@@ -264,10 +275,10 @@ int main(){
                         affiche_matrice(mcv.cv,NULL,mcv.nb_ville);
                         break;
                     case TEST :
-                        init_ville_alea(&mcv,250,cmax);
+                        init_ville_test(&mcv,t);
                         break;
                     default :
-                        init_ville_test(&mcv);
+                        init_ville_wikipedia(&mcv);
                         break;
 
                     }
@@ -334,8 +345,9 @@ int main(){
     MLV_free_window();
     
     /*Liberation memoire*/
-
     free(mcv.cv);
+    free(t.tabp);
+    free(chemin);
 
     return EXIT_SUCCESS;
 }
