@@ -209,7 +209,8 @@ int main(){
     
         /*-----FENETRE MENU------*/
         //(1ere fenetre)
-        while(fenetre == MENU){
+        while(fenetre == MENU ||
+              fenetre == COMP_TSP || fenetre == COMP_TSP_FOURMI){
 
             
             //Affichage de la fenetre
@@ -472,6 +473,10 @@ int main(){
             if(event == MLV_MOUSE_BUTTON &&
                mouse_button == MLV_BUTTON_LEFT &&
                button_state == MLV_PRESSED){
+                //Si click sur bouton retour -> menu
+                if(Click_retour_menu(mouse_x,mouse_y)){
+                    fenetre = MENU;
+                }
                 //Si Click sur execution
                 if(Click_executer(mouse_x,mouse_y)){
                     //Reallocation

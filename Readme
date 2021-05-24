@@ -38,6 +38,27 @@ Pour lancer le programme taper :
 |$> ./PCC   |
 +-----------+
 
+Une fois sur la page menu :
+ - Selectionner la technique de remplissage de matrice :
+    - aleatoire : renseigner le nombre de ville avec les bouton +/-
+    - test : Renseigner le chemin du fichier*
+             Appuyer sur entrée
+             Des points s'affichent
+- Selectionner l'algorithme
+  (Seuls TSP_Elag et Fourmis fonctionnent)
+- Cliquer sur le bouton suivant
+
+La page qui s'affiche ensuite est celle de l'algo actuelle :
+(Les affichages ne fonctionnent pas)
+- Cliquer sur la fleche en haut à gauche pour retourner au menu
+(Ne modifie pas la matrice de cout)
+- Cliquer sur lancer pour executer le programme
+(le resultat s'affiche sur la console)
+
+Dans le cas de la page fourmi :
+
+- modifier les parametres avec les boutons +/-
+(il est possible de relancer avec des paramtres different pour analyser les resultats)
 
 
 
